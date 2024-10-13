@@ -1,0 +1,57 @@
+import mysql.connector
+
+def create_connection():
+    con = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="harsh@125"
+    )
+    return con
+    
+def set_database():
+    con = create_connection()
+    
+    # Check if the connection was successful
+    if con is None:
+        print("Connection failed!")
+        return None, None
+    
+    cursor = con.cursor()
+    
+
+    create_db = "CREATE DATABASE IF NOT EXISTS stock_exp"
+    create_table_stock_price = """
+    CREATE TABLE IF NOT EXISTS stock_price (
+        date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        Company INT
+    )
+    """
+    create_company_data = """
+    CREATE TABLE IF NOT EXISTS company_detail (
+        comp_id INT PRIMARY KEY AUTO_INCREMENT,
+        comp_name VARCHAR(100),
+        email VARCHAR(100),
+        phone_no VARCHAR(15),
+        address VARCHAR(100)
+    )
+    """
+    
+    #create_customer_detail = "Create table IF not exists customer_detail(cust_id INT PRIMARY KEY AUTO INCREMENT, name varchar(100), )"
+    
+    
+    
+    # Execute SQL commands
+    cursor.execute(create_db)  # Create the database
+    cursor.execute("USE stock_exp")  # Switch to the new database
+    cursor.execute(create_table_stock_price)  # Create the table
+    cursor.execute(create_company_data)
+    
+    return cursor, con
+
+if __name__ == "__main__":
+    cursor, con = set_database()
+    
+    # Check if the connection was established
+    if con is not None and con.is_connected():
+        con.close()
+        print("The connection is closed")
