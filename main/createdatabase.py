@@ -29,14 +29,35 @@ def set_database():
     create_company_data = """
     CREATE TABLE IF NOT EXISTS company_detail (
         comp_id INT PRIMARY KEY AUTO_INCREMENT,
-        comp_name VARCHAR(100),
-        email VARCHAR(100),
+        comp_name VARCHAR(100) UNIQUE,
+        email VARCHAR(100) ,
         phone_no VARCHAR(15),
         address VARCHAR(100)
     )
     """
+    create_initial_stock_prices= """
+    CREATE TABLE IF NOT EXISTS stock_initial (
+        comp_id INT,
+        gross_expense INT,
+        gross_income INT,
+        stock_price INT,
+        FOREIGN KEY (comp_id) REFERENCES company_detail(comp_id)
+    );
+    """
     
-    #create_customer_detail = "Create table IF not exists customer_detail(cust_id INT PRIMARY KEY AUTO INCREMENT, name varchar(100), )"
+    #add unique to email later 
+    create_table_customer = """
+    CREATE TABLE  IF NOT EXISTS customer (
+        cust_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,          
+        phone VARCHAR(15),
+        password VARCHAR(255) NOT NULL,
+        age INT,
+        gender VARCHAR(10)
+    );
+    """
+    
     
     
     
@@ -45,6 +66,8 @@ def set_database():
     cursor.execute("USE stock_exp")  # Switch to the new database
     cursor.execute(create_table_stock_price)  # Create the table
     cursor.execute(create_company_data)
+    cursor.execute(create_initial_stock_prices)
+    cursor.execute(create_table_customer)
     
     return cursor, con
 

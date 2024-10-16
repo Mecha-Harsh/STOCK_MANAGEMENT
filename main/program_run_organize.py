@@ -5,11 +5,11 @@ def run_programs():
     while True:
         # Start program1.py
         print("Running Program 1...")
-        process1 = subprocess.Popen(['python', 'Stock-Management/Stock_update_2.py'])
+        process1 = subprocess.Popen(['python', 'Stock-Management/main/Stock_update_2.py'])
         process1.wait() 
         # Start program2.py
         print("Running Program 2...")
-        process2 = subprocess.Popen(['python', 'Stock-Management/examplegraph.py'])
+        process2 = subprocess.Popen(['python', 'Stock-Management/main/examplegraph.py'])
         process2.wait()  # Wait for Program 2 to finish
         print("Waiting for 30 seconds...")
         time.sleep(10)
