@@ -35,7 +35,7 @@ if cursor:
             con.commit()  # Commit the transaction
             print(value)
         else:
-            print("No rows found in stock_price.")
+            print("No stock has been lsited yet.")
         
         time.sleep(20)  # Wait for 10 seconds before the next iteration
 

@@ -2,6 +2,8 @@ from flask import Flask, redirect, request, render_template, url_for
 import webbrowser
 from createdatabase import set_database
 import threading
+import subprocess
+
 
 cursor, con = set_database()
 compid = []  # Initialize the compid variable globally
@@ -70,7 +72,9 @@ def submit_form2():
         except Exception as e:
             print(f"Error inserting stock data: {e}")
             return "Internal Server Error", 500
-
+    str=r"main\addingstocktostock_prices.py"
+    process2 = subprocess.Popen(['python', str])
+    process2.wait()
     return redirect(url_for('thank_you'))
 
 # Route for the thank you page

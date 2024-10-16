@@ -1,22 +1,9 @@
 import subprocess
 import time
 
-def run_programs():
-    while True:
-        # Start program1.py
-        print("Running Program 1...")
-        process1 = subprocess.Popen(['python', 'Stock-Management/main/Stock_update_2.py'])
-        process1.wait() 
-        # Start program2.py
-        print("Running Program 2...")
-        process2 = subprocess.Popen(['python', 'Stock-Management/main/examplegraph.py'])
-        process2.wait()  # Wait for Program 2 to finish
-        print("Waiting for 30 seconds...")
-        time.sleep(10)
+# Start the first process with an infinite loop
+process1 = subprocess.Popen(['python', 'main\\Stockpriceupdate.py'])
 
-# Execute the function to run both programs
-if __name__ == "__main__":
-    try:
-        run_programs()
-    except KeyboardInterrupt:
-        print("Terminating the program...")
+# Start the second process without waiting for the first process to complete
+str = r"main\register_companya.py"
+process2 = subprocess.Popen(['python', str])

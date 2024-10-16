@@ -57,7 +57,14 @@ def set_database():
         gender VARCHAR(10)
     );
     """
-    
+    create_owned_stock = """
+    Create Table IF NOT EXISTS owned_stock(
+      cust_id INT,
+      stock_name varchar(100),
+      stock_id INT,
+      quantity INT  
+    );
+    """
     
     
     
@@ -68,6 +75,7 @@ def set_database():
     cursor.execute(create_company_data)
     cursor.execute(create_initial_stock_prices)
     cursor.execute(create_table_customer)
+    cursor.execute(create_owned_stock)
     
     return cursor, con
 
