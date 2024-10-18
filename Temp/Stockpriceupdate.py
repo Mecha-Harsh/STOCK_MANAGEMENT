@@ -40,7 +40,7 @@ if cursor:
             column_names_quoted = ', '.join([f'`{col}`' for col in column_names])
             placeholders = ', '.join(['%s'] * len(value))
             insert_fetch = f"INSERT INTO stock_price ({column_names_quoted}) VALUES ({placeholders})"
-            print(value)
+            # print(value)
 
             # Execute the INSERT statement with the values
             cursor.execute(insert_fetch, value)

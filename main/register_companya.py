@@ -61,7 +61,7 @@ def submit_form2():
     gross_income = request.form.get('gross_income')
     print(gross_expense, gross_income)
     if cursor and compid:
-        price = int((float(gross_income) - float(gross_expense)) / 500)
+        price = int((float(gross_income) - float(gross_expense)) / 5)
         # Use parameterized query
         data_entry = "INSERT INTO stock_initial (comp_id, gross_expense, gross_income, stock_price) VALUES (%s, %s, %s, %s)"
         

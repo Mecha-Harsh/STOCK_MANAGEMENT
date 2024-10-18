@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <style>
+        /* Styling for the overall page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Styling the iframe */
+        iframe {
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+        }
+
+        /* Styling for the input section */
+        .input-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .input-section input {
+            margin: 0 10px;
+            padding: 10px;
+            width: 150px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-section button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .input-section button:hover {
+            background-color: #218838;
+        }
+
+        /* Style for sell button */
+        .sell-btn {
+            background-color: #dc3545;
+        }
+
+        .sell-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Style for other button */
+        button.other-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button.other-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Prices Dashboard</h1>
+
+    <!-- Embed the stock table page in an iframe with a random query parameter to prevent caching -->
+    <iframe src="/stock-table?{{ random_num }}" width="100%" height="400px" frameborder="0"></iframe>
+
+    <!-- Input section for Stock ID and Quantity -->
+    <div class="input-section">
+        <input type="number" id="stock-id" placeholder="Stock ID">
+        <input type="number" id="quantity" placeholder="Quantity">
+        <button id="buy-btn">Buy</button>
+        <button id="sell-btn" class="sell-btn">Sell</button>
+    </div>
+
+    <button class="other-btn">Other Button</button>
+    <!-- Any additional content goes here -->
+</body>
+</html>
