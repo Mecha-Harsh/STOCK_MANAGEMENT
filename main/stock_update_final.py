@@ -40,7 +40,7 @@ def upadte_stock():
             # Execute the INSERT statement with the new values
             cursor.execute(insert_fetch, value)
             con.commit()  # Commit the transaction
-            # print(value)
+            #print(value)
         else:
             print("No rows found in stock_price.")
         return value
@@ -74,9 +74,9 @@ def get_data():
                 cursor.execute(query_max)
                 max_value = cursor.fetchone()  # Use fetchone to get a single row
                 max_values.append(max_value[0])  # Append the maximum value
-            # print(names)
+            print(names)
             for i in names:
-                # print(i[0])
+                print(i[0])
                 query = "SELECT comp_id FROM company_detail WHERE comp_name = %s"
                 cursor.execute(query, (i[0],))  # Use a tuple for the parameter
                 temp = cursor.fetchone()
@@ -96,7 +96,7 @@ def get_data():
         print("No data found in stock_price table.")
     
 
-    # print("Fetched data:", data)  # Debugging line to check the fetched data
+    #print("Fetched data:", data)  # Debugging line to check the fetched data
     return data
 
 

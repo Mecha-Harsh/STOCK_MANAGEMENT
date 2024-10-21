@@ -1,10 +1,10 @@
 import subprocess
 import time
-from createdatabase import set_database
+# from createdatabase import set_database
 
-cursor,con = set_database()
+# cursor,con = set_database()
 
-ans=[]
+# ans=[]
 
 # def get_data():
 #     names = []
@@ -60,8 +60,8 @@ ans=[]
 
 
 # Start the first process with an infinite loop
-process1 = subprocess.Popen(['python', 'main\\Stockpriceupdate.py'])
-process5=subprocess.Popen(['python','Temp\data_fetcher.py'])
+# process1 = subprocess.Popen(['python', 'main\\Stockpriceupdate.py'])
+process5=subprocess.Popen(['python','Temp\main_table.py'])
 # Start the second process without waiting for the first process to complete
 # str = r"main\register_companya.py"
 # process2 = subprocess.Popen(['python', str])

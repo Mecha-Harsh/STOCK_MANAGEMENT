@@ -1,9 +1,9 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 import webbrowser
 import threading
 from createdatabase import set_database
 
-cursor , con = set_database()
+cursor, con = set_database()
 
 app = Flask(__name__)
 
@@ -30,10 +30,11 @@ def submit():
             cursor.execute(enter_data)
             con.commit()
             print("Data inserted successfully.")
+            return redirect(url_for('form'))  # Redirect to the form page after successful submission
         except Exception as e:
             print(f"Error inserting data: {e}")
             return "Internal Server Error", 500
-
+    return "No cursor found", 500  # In case cursor is None
 
 def open_browser():
     # Wait a moment to ensure the server is up, then open the browser

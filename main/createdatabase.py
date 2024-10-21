@@ -61,7 +61,7 @@ def set_database():
       cust_id INT,
       stock_name varchar(100),
       stock_id INT,
-      quantity INT  
+      quantity INT
     );
     """
     

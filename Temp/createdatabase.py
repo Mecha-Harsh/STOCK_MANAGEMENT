@@ -76,6 +76,7 @@ def set_database():
     cursor.execute(create_table_customer)
     cursor.execute(create_owned_stock)
     
+    
     return cursor, con
 
 if __name__ == "__main__":
