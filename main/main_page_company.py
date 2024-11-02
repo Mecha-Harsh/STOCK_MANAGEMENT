@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, make_response, jsonify
 from stock_update_final import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company
 from createdatabase import set_database
+import sys
+import webbrowser
+import threading
 
+# Set up database connection
 cursor, con = set_database()
 
 company_id = 1
@@ -34,7 +38,6 @@ def listed_stock_table():
 def listed_stock():
     return render_template('company_listed_stock.html')
 
-
 @app.route('/api/stock-data')
 def api_stock_data():
     stocks = get_stock_of_company(company_id)  # Fetch stock data for the graph
@@ -45,6 +48,10 @@ def api_stock_data():
     
     return jsonify(stock_data)
 
+def open_browser():
+    webbrowser.open_new(f'http://127.0.0.1:{port}/')  # Change 'port' to the appropriate variable
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(sys.argv[2]) if len(sys.argv) > 2 else 5000 
+    threading.Timer(1, open_browser).start()  # Delay to allow the server to start before opening the browser
+    app.run(debug=True, port=port)

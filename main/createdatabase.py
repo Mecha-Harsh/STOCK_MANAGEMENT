@@ -33,7 +33,8 @@ def set_database():
         comp_name VARCHAR(100) UNIQUE,
         email VARCHAR(100),
         phone_no VARCHAR(15),
-        address VARCHAR(100)
+        address VARCHAR(100),
+        password varchar(100)
     )
     """
     
