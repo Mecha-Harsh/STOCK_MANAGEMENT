@@ -1,0 +1,12 @@
+<!-- templates/main.html -->
+{% extends 'base1.html' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block content %}
+    <h1>Stock Prices Dashboard</h1>
+
+    <!-- Embed the stock table page in an iframe with a random query parameter to prevent caching -->
+    <iframe src="/stock-table?{{ random_num }}" width="100%" height="400px" frameborder="0"></iframe>
+
+{% endblock %}

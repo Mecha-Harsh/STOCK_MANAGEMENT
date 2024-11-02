@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Company Stock{% endblock %}
+
+{% block content %}
+    <h1>Stock Prices of Company</h1>
+
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <iframe src="/listed-stocks-table" width="100%" height="400px" frameborder="0"></iframe>
+
+        <!-- Include the graph -->
+        {% include 'graph.html' %}
+    </div>
+{% endblock %}
