@@ -7,7 +7,8 @@ from datetime import datetime
 cursor, con = set_database()
 
 # Example user ID, to be replaced with the ID of the logged-in user
-user_id = int(sys.argv[1]) if len(sys.argv) > 1 else None
+user_id=3
+#user_id = int(sys.argv[1]) if len(sys.argv) > 1 else None
 def fetch_latest_price(comp_id):
     # Fetch the company name based on comp_id
     query = f"SELECT comp_name FROM company_detail WHERE comp_id = {comp_id}"
@@ -146,15 +147,16 @@ def another_page():
     cursor.execute(query)
     rows = cursor.fetchall()
     for row in rows:
-        value = {
+        value_1 = {
             'trans_id': row[0],
             'stcok_id': row[2],
             'action': row[3],
             'quantity': row[4],
-            'date_time': row[5].strftime('%Y-%m-%d %H:%M:%S'),            'price': row[6],
+            'date_time': row[5].strftime('%Y-%m-%d %H:%M:%S'),            
+            'price': row[6],
             'total_value': row[7]
         }
-    trans.append(value)
+        trans.append(value_1)
     return render_template('user_profile.html',user_info=data,transaction=trans)
 
 # Route for the owned stocks page

@@ -55,12 +55,17 @@ cursor,con = set_database()
 #             }
 #             data.append(value)
 #     return data
-user_id =1 
-query = f"select * from company_detail where comp_id={1}"
-cursor.execute(query)
-info = cursor.fetchone()
-print(info)
+# user_id =1 
+# query = f"select * from company_detail where comp_id={1}"
+# cursor.execute(query)
+# info = cursor.fetchone()
+# print(info)
 
+
+query = f"select * from customer where cust_id={1}"
+cursor.execute(query)
+rows = cursor.fetchone()
+print(rows)
 
 # Start the first process with an infinite loop
 #process1 = subprocess.Popen(['python', 'main\\Stockpriceupdate.py'])
