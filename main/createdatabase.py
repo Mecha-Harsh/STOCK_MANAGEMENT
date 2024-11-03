@@ -41,6 +41,7 @@ def set_database():
     create_initial_stock_prices = """
     CREATE TABLE IF NOT EXISTS stock_initial (
         comp_id INT,
+        initial_stock INT,
         stock_id INT DEFAULT NULL,
         gross_expense INT,
         gross_income INT,
@@ -49,6 +50,23 @@ def set_database():
         UNIQUE KEY (stock_id)  
     )
     """
+    
+    create_company_transaction_table="""
+        CREATE TABLE IF NOT EXISTS company_transac (
+        comp_transac_no INT PRIMARY KEY AUTO_INCREMENT,
+        comp_id INT,
+        stock_id INT,
+        stock_quantity INT,
+        transac_type VARCHAR(10),
+        transac_quantity INT,
+        Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
+        price DECIMAL(10, 2),
+        total_price DECIMAL(10, 2),
+        FOREIGN KEY (comp_id) REFERENCES company_detail(comp_id),
+        FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id)
+    );
+    """
+
     
     create_table_customer = """
     CREATE TABLE IF NOT EXISTS customer (
@@ -96,6 +114,7 @@ def set_database():
     cursor.execute(create_table_customer)
     cursor.execute(create_owned_stock)
     cursor.execute(create_customer_transac)
+    cursor.execute(create_company_transaction_table)
     
     return cursor, con
 

@@ -138,9 +138,10 @@ def submit_form2():
             return "Company ID not found", 400  # Handle the error
 
         # Use parameterized query
-        data_entry = "INSERT INTO stock_initial (comp_id, stock_id, gross_expense, gross_income, stock_price) VALUES (%s, %s, %s, %s, %s)"
+        initial_stock = 10000
+        data_entry = "INSERT INTO stock_initial (comp_id,initial_stock ,stock_id, gross_expense, gross_income, stock_price) VALUES (%s,%s ,%s, %s, %s, %s)"
         try:
-            cursor.execute(data_entry, (compid, compid, gross_expense, gross_income, price))
+            cursor.execute(data_entry, (compid,initial_stock ,compid, gross_expense, gross_income, price))
             conn.commit()
             print("Stock information inserted successfully.")
         except Exception as e:
