@@ -8,7 +8,7 @@ def create_connection():
         connection_timeout=600
     )
     return con
-    
+
 def set_database():
     con = create_connection()
     
@@ -34,7 +34,7 @@ def set_database():
         email VARCHAR(100),
         phone_no VARCHAR(15),
         address VARCHAR(100),
-        password varchar(100)
+        password VARCHAR(100)
     )
     """
     
@@ -45,12 +45,10 @@ def set_database():
         gross_expense INT,
         gross_income INT,
         stock_price INT,
-        FOREIGN KEY (comp_id) REFERENCES company_detail(comp_id),
+        FOREIGN KEY (comp_id) REFERENCES company_detail(comp_id) ON DELETE CASCADE,
         UNIQUE KEY (stock_id)  
     )
     """
-    
-    # Trigger to set stock_id to the same value as comp_id after insert
     
     create_table_customer = """
     CREATE TABLE IF NOT EXISTS customer (
@@ -64,30 +62,13 @@ def set_database():
     )
     """
     
-    create_company_transaction_table="""
-    CREATE TABLE company_transac (
-    comp_transac_no INT PRIMARY KEY AUTO_INCREMENT,
-    comp_id INT,
-    stock_id INT,
-    transac_type VARCHAR(10),
-    transac_quantity INT,
-    Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    quantity_before INT,
-    quantity_after INT,
-    price_at_transac DECIMAL(10, 2),
-    total_price DECIMAL(10, 2),
-    FOREIGN KEY (comp_id) REFERENCES Company(Company_ID),
-    FOREIGN KEY (stock_id) REFERENCES Stock(Stock_ID)
-    );
-    """
-
-    
     create_owned_stock = """
     CREATE TABLE IF NOT EXISTS owned_stock (
         cust_id INT,
         stock_name VARCHAR(100),
         stock_id INT,
-        quantity INT
+        quantity INT,
+        FOREIGN KEY (cust_id) REFERENCES customer(cust_id) ON DELETE CASCADE
     )
     """
     
@@ -101,8 +82,8 @@ def set_database():
         date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         each_stock_price INT,
         total_price INT,
-        FOREIGN KEY (cust_id) REFERENCES customer(cust_id),
-        FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id)
+        FOREIGN KEY (cust_id) REFERENCES customer(cust_id) ON DELETE CASCADE,
+        FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id) ON DELETE CASCADE
     )
     """
     
@@ -115,6 +96,7 @@ def set_database():
     cursor.execute(create_table_customer)
     cursor.execute(create_owned_stock)
     cursor.execute(create_customer_transac)
+    
     return cursor, con
 
 if __name__ == "__main__":

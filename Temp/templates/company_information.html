@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile</title>
+    <style>
+        /* General Reset and Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #333;
+        }
+
+        .profile-container {
+            background-color: #fff;
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h2 {
+            color: #0077b6;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin: 8px 0;
+        }
+
+        .profile-detail {
+            font-weight: bold;
+            color: #023e8a;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Company Profile</h2>
+        <p><span class="profile-detail">Username:</span> {{ company.username }}</p>
+        <p><span class="profile-detail">Email:</span> {{ company.email }}</p>
+        <p><span class="profile-detail">Phone:</span> {{ company.phone }}</p>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,75 @@
+<!-- templates/user_info.html -->
+{% extends 'base.html' %}
+
+{% block title %}User Information{% endblock %}
+
+{% block content %}
+<h1>Company Information</h1>
+<form class="user-info-form">
+    <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" value="{{ user_info.id }}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ user_info.name }}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ user_info.email }}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" value="{{ user_info.phone }}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" value="{{ user_info.age }}" readonly>
+    </div>
+</form>
+
+<style>
+    /* Basic styles for the form */
+    .user-info-form {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[readonly] {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+</style>
+{% endblock %}

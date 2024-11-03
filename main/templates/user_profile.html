@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+    <h1>User Profile</h1>
+    <form class="user-info-form">
+        <label>User ID:</label> <span>{{ user_info.id }}</span><br>
+        <label>Name:</label> <span>{{ user_info.name }}</span><br>
+        <label>Email:</label> <span>{{ user_info.email }}</span><br>
+        <label>Phone:</label> <span>{{ user_info.phone }}</span><br>
+        <label>Age:</label> <span>{{ user_info.age }}</span><br>
+        <label>Gender:</label> <span>{{ user_info.gender }}</span><br>
+    </form>
+
+    <h2>Transaction History</h2>
+    <table class="transaction-table">
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Stock ID</th>
+                <th>Action</th>
+                <th>Quantity</th>
+                <th>Date & Time</th>
+                <th>Price</th>
+                <th>Total Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transaction %}
+            <tr>
+                <td>{{ transaction.trans_id }}</td>
+                <td>{{ transaction.stcok_id }}</td>
+                <td>{{ transaction.action }}</td>
+                <td>{{ transaction.quantity }}</td>
+                <td>{{ transaction.date_time }}</td>
+                <td>{{ transaction.price }}</td>
+                <td>{{ transaction.total_value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Delete Account</h2>
+    <form action="/delete-account" method="post" class="delete-account-form">
+        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+        <button type="submit" style="color: white; background-color: red; padding: 10px 15px; border: none; cursor: pointer;">Delete Account</button>
+    </form>
+{% endblock %}
+
+<style>
+    /* Styling for the user info form */
+    .user-info-form label {
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+    }
+    .user-info-form span {
+        margin-left: 10px;
+    }
+    
+    /* Styling for the transaction table */
+    .transaction-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .transaction-table th, .transaction-table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    .transaction-table th {
+        background-color: #f4f4f4;
+    }
+    .transaction-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .transaction-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Styling for the delete account form */
+    .delete-account-form {
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        padding: 15px;
+        background-color: #f9f9f9;
+    }
+</style>

@@ -2,7 +2,7 @@ import subprocess
 import time
 from createdatabase import set_database
 
-# cursor,con = set_database()
+cursor,con = set_database()
 
 # ans=[]
 
@@ -55,8 +55,11 @@ from createdatabase import set_database
 #             }
 #             data.append(value)
 #     return data
-
-
+user_id =1 
+query = f"select * from company_detail where comp_id={1}"
+cursor.execute(query)
+info = cursor.fetchone()
+print(info)
 
 
 # Start the first process with an infinite loop
@@ -64,8 +67,8 @@ from createdatabase import set_database
 # str = r"main\addingstocktostock_prices.py"
 # process2 = subprocess.Popen(['python', str])
 # process2.wait()
-new_app_path = r'main\main_page_company.py'
-subprocess.Popen(['python',new_app_path])
+# new_app_path = r'main\main_page_company.py'
+# subprocess.Popen(['python',new_app_path])
             # Start the new application on a different port
 # subprocess.Popen(['python', new_app_path], creationflags=subprocess.CREATE_NEW_CONSOLE)
             

@@ -48,10 +48,20 @@ def api_stock_data():
     
     return jsonify(stock_data)
 
-#def open_browser():
-    #webbrowser.open_new('http://127.0.0.1:5001/')  # Change 'port' to the appropriate variable
 
+@app.route('/profile')
+def profile():
+    query = f"select * from company_detail where comp_id={company_id}"
+    cursor.execute(query)
+    user_data_tuple = cursor.fetchone()
+    user_data_dict = {
+        'id': user_data_tuple[0],
+        'name': user_data_tuple[1],
+        'email': user_data_tuple[2],
+        'phone': user_data_tuple[3],
+        'age': user_data_tuple[4]
+    }
+    return render_template('company_profile.html',user_info=user_data_dict)
 if __name__ == '__main__':
-    #port = int(sys.argv[1]) if len(sys.argv) > 1 else 5001
-    #threading.Timer(1, open_browser).start()  # Delay to allow the server to start before opening the browser
+
     app.run(debug=False, port=5001)

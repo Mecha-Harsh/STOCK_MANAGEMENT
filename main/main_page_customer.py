@@ -1,13 +1,13 @@
-from flask import Flask, jsonify, render_template, request, make_response
+from flask import Flask, jsonify, render_template, request, make_response,url_for,redirect
 from stock_update_final import get_data, get_owned_stock_data, get_data_for_owned_stock_page,get_stock_of_company
 from createdatabase import set_database
 import sys
+from datetime import datetime
 # Initialize the database connection
 cursor, con = set_database()
 
 # Example user ID, to be replaced with the ID of the logged-in user
 user_id = int(sys.argv[1]) if len(sys.argv) > 1 else None
-
 def fetch_latest_price(comp_id):
     # Fetch the company name based on comp_id
     query = f"SELECT comp_name FROM company_detail WHERE comp_id = {comp_id}"
@@ -128,7 +128,34 @@ def submit_transaction():
 # Route for the third page in the navbar
 @app.route('/profile')
 def another_page():
-    return render_template('another_page.html')
+    trans=[]
+    query = f"select * from customer where cust_id={user_id}"
+    cursor.execute(query)
+    rows = cursor.fetchone()
+    data = {
+        'id': rows[0],
+        'name': rows[1],
+        'email': rows[2],
+        'phone': rows[3],
+        'age': rows[5],
+        'gender': rows[6]
+        # Password intentionally excluded for security reasons
+    }
+    
+    query = f"select * from customer_transac where cust_id={user_id}"
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    for row in rows:
+        value = {
+            'trans_id': row[0],
+            'stcok_id': row[2],
+            'action': row[3],
+            'quantity': row[4],
+            'date_time': row[5].strftime('%Y-%m-%d %H:%M:%S'),            'price': row[6],
+            'total_value': row[7]
+        }
+    trans.append(value)
+    return render_template('user_profile.html',user_info=data,transaction=trans)
 
 # Route for the owned stocks page
 @app.route('/owned-Stocks')
@@ -171,6 +198,14 @@ def stock_graph():
     print(f"Graph Data: {dates}, {prices}")  # Debug line
     return render_template('stock_graph.html', stock_id=stock_id, dates=dates, prices=prices)
 
+@app.route('/delete-account', methods=['POST'])
+def delete_account():
+    if user_id:
+        # Execute the deletion logic here, e.g., remove user from the database
+        cursor.execute("DELETE FROM customer WHERE cust_id = %s", (user_id,))
+        con.commit()
+        return redirect(url_for('index'))  # Redirect to home or a confirmation page
+    return "Error: User not found", 404
 
 
 

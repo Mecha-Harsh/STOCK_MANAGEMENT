@@ -147,8 +147,8 @@ def submit_form2():
             print(f"Error inserting stock data: {e}")
             return "Internal Server Error", 500
 
-        new_app_path = r'main\main_page_company.py'
-        subprocess.Popen(['python', new_app_path, '--port', '5001'])  # Pass port as an argument
+        str = r"main\addingstocktostock_prices.py"
+        process2 = subprocess.Popen(['python', str])  # Pass port as an argument
         return "<h2>Financial Details Submitted Successfully</h2>"
     
 @stocks.route('/company/login', methods=['GET', 'POST'])
