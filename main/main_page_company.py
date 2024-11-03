@@ -8,7 +8,7 @@ import threading
 # Set up database connection
 cursor, con = set_database()
 
-company_id = 1
+company_id = int(sys.argv[1]) if len(sys.argv) > 1 else None
 
 app = Flask(__name__)
 
@@ -48,10 +48,10 @@ def api_stock_data():
     
     return jsonify(stock_data)
 
-def open_browser():
-    webbrowser.open_new(f'http://127.0.0.1:{port}/')  # Change 'port' to the appropriate variable
+#def open_browser():
+    #webbrowser.open_new('http://127.0.0.1:5001/')  # Change 'port' to the appropriate variable
 
 if __name__ == '__main__':
-    port = int(sys.argv[2]) if len(sys.argv) > 2 else 5000 
-    threading.Timer(1, open_browser).start()  # Delay to allow the server to start before opening the browser
-    app.run(debug=True, port=port)
+    #port = int(sys.argv[1]) if len(sys.argv) > 1 else 5001
+    #threading.Timer(1, open_browser).start()  # Delay to allow the server to start before opening the browser
+    app.run(debug=False, port=5001)

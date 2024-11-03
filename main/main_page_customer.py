@@ -1,12 +1,12 @@
 from flask import Flask, jsonify, render_template, request, make_response
 from stock_update_final import get_data, get_owned_stock_data, get_data_for_owned_stock_page,get_stock_of_company
 from createdatabase import set_database
-
+import sys
 # Initialize the database connection
 cursor, con = set_database()
 
 # Example user ID, to be replaced with the ID of the logged-in user
-user_id = 1
+user_id = int(sys.argv[1]) if len(sys.argv) > 1 else None
 
 def fetch_latest_price(comp_id):
     # Fetch the company name based on comp_id
@@ -175,4 +175,4 @@ def stock_graph():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5002)

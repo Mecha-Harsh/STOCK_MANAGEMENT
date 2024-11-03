@@ -50,6 +50,15 @@ def user_login():
         email = request.form['username']
         password = request.form['password']
         if check_login(email, password):
+            query = f"select cust_id from customer where email='{email}' and password ='{password}'"
+            cursor.execute(query)
+            id = cursor.fetchone()
+            id = id[0]
+            new_app_path = r'main\main_page_customer.py'
+            # Start the new application in a new console
+            process = subprocess.Popen(['python', new_app_path,str(id)])
+            webbrowser.open_new(('http://127.0.0.1:5002/'))
+            
             return "<h2>Login Successful</h2>"
         else:
             return "<h2>Wrong email or password entered</h2>"
@@ -138,9 +147,8 @@ def submit_form2():
             print(f"Error inserting stock data: {e}")
             return "Internal Server Error", 500
 
-        str = r"main\addingstocktostock_prices.py"
-        process2 = subprocess.Popen(['python', str])
-        process2.wait()
+        new_app_path = r'main\main_page_company.py'
+        subprocess.Popen(['python', new_app_path, '--port', '5001'])  # Pass port as an argument
         return "<h2>Financial Details Submitted Successfully</h2>"
     
 @stocks.route('/company/login', methods=['GET', 'POST'])
@@ -154,10 +162,15 @@ def company_login():
         # Check login credentials
         if check_company_login(email, password):
             # Path to the new application
+            query_id = f"Select comp_id from company_detail where email='{email}' and password='{password}'"
+            cursor.execute(query_id)
+            id = cursor.fetchone()
+            id = id[0]
+            
             new_app_path = r'main\main_page_company.py'
             # Start the new application in a new console
-            subprocess.Popen(['python', new_app_path, email], creationflags=subprocess.CREATE_NEW_CONSOLE)
-            
+            process = subprocess.Popen(['python', new_app_path,str(id)])
+            webbrowser.open_new(('http://127.0.0.1:5001/'))            
             # Return a response to indicate that the new app is starting
             return "<h2>Company Login Successful. The new application is starting.</h2>"
         else:
@@ -181,4 +194,4 @@ def open_browser():
 
 if __name__ == '__main__':
     threading.Timer(1, open_browser).start()
-    stocks.run(debug=True)
+    stocks.run(debug=False,port=5000)
