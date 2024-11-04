@@ -170,7 +170,6 @@ def get_stock_of_company(comp_id):
     cursor.execute(query)
     name = cursor.fetchone()
     name = name[0]  # Assuming comp_name is the only element returned
-
     price_query = f"SELECT date_time, {name} FROM stock_price"
     cursor.execute(price_query)
     prices = cursor.fetchall()
@@ -178,6 +177,8 @@ def get_stock_of_company(comp_id):
     min=99999999
     if prices:
         for row in prices:
+            if(row[1]==None):
+                continue
             if(max<row[1]):
                 max=row[1]
             if(min>row[1]):
@@ -195,6 +196,6 @@ def get_stock_of_company(comp_id):
 
 
 if __name__ == "__main__":
-    get_data()
-    get_data_for_owned_stock_page(1)
-    get_stock_of_company(1)
+    #get_data()
+    #get_data_for_owned_stock_page(1)
+    get_stock_of_company(2)

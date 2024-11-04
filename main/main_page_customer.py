@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request, make_response, url_f
 from stock_update_final import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company
 from createdatabase import set_database
 import sys
+import webbrowser
 from datetime import datetime
 
 # Initialize the database connection
@@ -222,7 +223,7 @@ def delete_account():
     if user_id:
         cursor.execute("DELETE FROM customer WHERE cust_id = %s", (user_id,))
         con.commit()
-        return redirect(url_for('index'))
+        webbrowser.open_new(('http://127.0.0.1:5000/'))
     return "Error: User not found", 404
 
 if __name__ == '__main__':

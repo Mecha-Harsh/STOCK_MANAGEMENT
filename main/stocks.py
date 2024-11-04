@@ -88,33 +88,31 @@ def company_register():
         email = request.form['email']
         address = request.form['address']
         passw = request.form['pass']
-        sql_value = "INSERT INTO company_detail (comp_name, email, phone_no, address, password) VALUES (%s, %s, %s, %s, %s)"
+        sql_value = "INSERT INTO company_detail (comp_name, email, phone_no, address,password) VALUES (%s, %s, %s, %s,%s)"
         get_compid = "SELECT comp_id FROM company_detail WHERE comp_name=%s AND email=%s"
 
         if cursor:
             try:
-                cursor.execute(sql_value, (name, email, phone, address, passw))
+                cursor.execute(sql_value, (name, email, phone, address,passw))
                 conn.commit()
 
                 cursor.execute(get_compid, (name, email))
-                compid = cursor.fetchone()
+                compid = cursor.fetchone()  # Fetch one result
                 if compid:
-                    session['compid'] = compid[0]
+                    session['compid'] = compid[0]  # Store in session
                     print(f"Company ID fetched: {compid[0]}")
                 else:
                     print("No company ID found for the given details.")
-
+                
             except Exception as e:
                 print(f"Error executing query: {e}")
                 return "Internal Server Error", 500
         else:
             print("No connection found")
             return "Database Connection Error", 500
-
-        return render_template('success.html', message="Company Registration Successful")
-
+        return redirect(url_for('company_registration2'))  # Redirect to financial details form
+    
     return render_template('company_registration1.html')
-
 
 @stocks.route('/company/financial-details', methods=['GET', 'POST'])
 def company_registration2():
@@ -153,7 +151,7 @@ def submit_form2():
 
         str = r"main\addingstocktostock_prices.py"
         process2 = subprocess.Popen(['python', str])  # Pass port as an argument
-        return "<h2>Financial Details Submitted Successfully</h2>"
+        return render_template('success.html', message="Company Registration Successful")
     
 @stocks.route('/company/login', methods=['GET', 'POST'])
 
