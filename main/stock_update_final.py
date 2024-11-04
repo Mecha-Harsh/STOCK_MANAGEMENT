@@ -176,19 +176,21 @@ def get_stock_of_company(comp_id):
     prices = cursor.fetchall()
     max=-9999999
     min=99999999
-
-    for row in prices:
-        if(max<row[1]):
-            max=row[1]
-        if(min>row[1]):
-            min=row[1]
-        temp = {
-            "date": row[0].strftime('%Y-%m-%d %H:%M:%S'),  # Format the date
-            "price": row[1],
-            "min":min,
-            "max":max
-        }
-        data.append(temp)
+    if prices:
+        for row in prices:
+            if(max<row[1]):
+                max=row[1]
+            if(min>row[1]):
+                min=row[1]
+            temp = {
+                "date": row[0].strftime('%Y-%m-%d %H:%M:%S'),  # Format the date
+                "price": row[1],
+                "min":min,
+                "max":max
+            }
+            data.append(temp)
+    else:
+        print("No rows found")
     return data
 
 

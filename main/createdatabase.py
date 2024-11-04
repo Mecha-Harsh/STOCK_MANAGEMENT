@@ -31,7 +31,7 @@ def set_database():
     CREATE TABLE IF NOT EXISTS company_detail (
         comp_id INT PRIMARY KEY AUTO_INCREMENT,
         comp_name VARCHAR(100) UNIQUE,
-        email VARCHAR(100),
+        email VARCHAR(100) UNIQUE,
         phone_no VARCHAR(15),
         address VARCHAR(100),
         password VARCHAR(100)
@@ -72,7 +72,7 @@ def set_database():
     CREATE TABLE IF NOT EXISTS customer (
         cust_id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
-        email VARCHAR(100) NOT NULL,          
+        email VARCHAR(100) NOT NULL UNIQUE,          
         phone VARCHAR(15),
         password VARCHAR(255) NOT NULL,
         age INT,

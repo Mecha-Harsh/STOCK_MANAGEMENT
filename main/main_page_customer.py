@@ -10,7 +10,7 @@ cursor, con = set_database()
 # Example user ID, to be replaced with the ID of the logged-in user
 user_id = int(sys.argv[1]) if len(sys.argv) > 1 else None
 
-def fetch_latest_price(comp_id):
+def fetch_latest_price(comp_id):    
     query = f"SELECT comp_name FROM company_detail WHERE comp_id = {comp_id}"
     cursor.execute(query)
     result = cursor.fetchone()
@@ -226,4 +226,4 @@ def delete_account():
     return "Error: User not found", 404
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+    app.run(debug=False, port=5002)
