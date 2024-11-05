@@ -23,8 +23,10 @@ def set_database():
     
     create_table_stock_price = """
     CREATE TABLE IF NOT EXISTS stock_price (
-        date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
+        date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        stock_id INT NOT NULL,
+        price INT NOT NULL
+    );
     """
     
     create_company_data = """
@@ -35,24 +37,24 @@ def set_database():
         phone_no VARCHAR(15),
         address VARCHAR(100),
         password VARCHAR(100)
-    )
+    );
     """
     
     create_initial_stock_prices = """
     CREATE TABLE IF NOT EXISTS stock_initial (
         comp_id INT,
         initial_stock INT,
-        stock_id INT DEFAULT NULL,
+        stock_id INT,
         gross_expense INT,
         gross_income INT,
         stock_price INT,
         FOREIGN KEY (comp_id) REFERENCES company_detail(comp_id) ON DELETE CASCADE,
-        UNIQUE KEY (stock_id)  
-    )
+        PRIMARY KEY (stock_id)  
+    );
     """
     
-    create_company_transaction_table="""
-        CREATE TABLE IF NOT EXISTS company_transac (
+    create_company_transaction_table = """
+    CREATE TABLE IF NOT EXISTS company_transac (
         comp_transac_no INT PRIMARY KEY AUTO_INCREMENT,
         comp_id INT,
         stock_id INT,
@@ -66,7 +68,6 @@ def set_database():
         FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id)
     );
     """
-
     
     create_table_customer = """
     CREATE TABLE IF NOT EXISTS customer (
@@ -77,7 +78,7 @@ def set_database():
         password VARCHAR(255) NOT NULL,
         age INT,
         gender VARCHAR(10)
-    )
+    );
     """
     
     create_owned_stock = """
@@ -87,7 +88,7 @@ def set_database():
         stock_id INT,
         quantity INT,
         FOREIGN KEY (cust_id) REFERENCES customer(cust_id) ON DELETE CASCADE
-    )
+    );
     """
     
     create_customer_transac = """
@@ -102,19 +103,24 @@ def set_database():
         total_price INT,
         FOREIGN KEY (cust_id) REFERENCES customer(cust_id) ON DELETE CASCADE,
         FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id) ON DELETE CASCADE
-    )
+    );
     """
     
-    # Execute SQL commands
-    cursor.execute(create_db)  # Create the database
-    cursor.execute("USE stock_exp")  # Switch to the new database
-    cursor.execute(create_table_stock_price)  # Create tables
-    cursor.execute(create_company_data)
-    cursor.execute(create_initial_stock_prices)
-    cursor.execute(create_table_customer)
-    cursor.execute(create_owned_stock)
-    cursor.execute(create_customer_transac)
-    cursor.execute(create_company_transaction_table)
+    try:
+        # Execute SQL commands
+        cursor.execute(create_db)  # Create the database
+        cursor.execute("USE stock_exp")  # Switch to the new database
+        cursor.execute(create_table_stock_price)  # Create tables
+        cursor.execute(create_company_data)
+        cursor.execute(create_initial_stock_prices)
+        cursor.execute(create_table_customer)
+        cursor.execute(create_owned_stock)
+        cursor.execute(create_customer_transac)
+        cursor.execute(create_company_transaction_table)
+        con.commit()  # Commit the transaction
+        
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
     
     return cursor, con
 

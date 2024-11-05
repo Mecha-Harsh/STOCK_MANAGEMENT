@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request, make_response, url_for, redirect
-from stock_update_final import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company
+from stock_update import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company
 from createdatabase import set_database
 import sys
 import webbrowser
@@ -12,13 +12,14 @@ cursor, con = set_database()
 user_id = int(sys.argv[1]) if len(sys.argv) > 1 else None
 
 def fetch_latest_price(comp_id):    
-    query = f"SELECT comp_name FROM company_detail WHERE comp_id = {comp_id}"
-    cursor.execute(query)
-    result = cursor.fetchone()
+    # query = f"SELECT comp_name FROM company_detail WHERE comp_id = {comp_id}"
+    # cursor.execute(query)
+    # result = cursor.fetchone()
+    result=1
     
     if result:
-        name = result[0]
-        price_query = f"SELECT `{name}` FROM stock_price ORDER BY date_time DESC LIMIT 1"
+        # name = result[0]
+        price_query = f"SELECT price FROM stock_price where stock_id={comp_id} ORDER BY date_time DESC LIMIT 1"
         cursor.execute(price_query)
         price_result = cursor.fetchone()
         

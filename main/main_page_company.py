@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response, jsonify
-from stock_update_final import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company
+from stock_update import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company
 from createdatabase import set_database
 import sys
 import webbrowser

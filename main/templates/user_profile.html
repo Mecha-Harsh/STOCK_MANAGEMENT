@@ -30,7 +30,7 @@
             {% for transaction in transaction %}
             <tr>
                 <td>{{ transaction.trans_id }}</td>
-                <td>{{ transaction.stcok_id }}</td>
+                <td>{{ transaction.stock_id }}</td>
                 <td>{{ transaction.action }}</td>
                 <td>{{ transaction.quantity }}</td>
                 <td>{{ transaction.date_time }}</td>
@@ -46,45 +46,45 @@
         <p>Are you sure you want to delete your account? This action cannot be undone.</p>
         <button type="submit" style="color: white; background-color: red; padding: 10px 15px; border: none; cursor: pointer;">Delete Account</button>
     </form>
+
+    <style>
+        /* Styling for the user info form */
+        .user-info-form label {
+            font-weight: bold;
+            display: inline-block;
+            width: 100px;
+        }
+        .user-info-form span {
+            margin-left: 10px;
+        }
+
+        /* Styling for the transaction table */
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .transaction-table th, .transaction-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .transaction-table th {
+            background-color: #f4f4f4;
+        }
+        .transaction-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .transaction-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Styling for the delete account form */
+        .delete-account-form {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+    </style>
 {% endblock %}
-
-<style>
-    /* Styling for the user info form */
-    .user-info-form label {
-        font-weight: bold;
-        display: inline-block;
-        width: 100px;
-    }
-    .user-info-form span {
-        margin-left: 10px;
-    }
-    
-    /* Styling for the transaction table */
-    .transaction-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    .transaction-table th, .transaction-table td {
-        padding: 10px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
-    .transaction-table th {
-        background-color: #f4f4f4;
-    }
-    .transaction-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    .transaction-table tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    /* Styling for the delete account form */
-    .delete-account-form {
-        margin-top: 20px;
-        border: 1px solid #ddd;
-        padding: 15px;
-        background-color: #f9f9f9;
-    }
-</style>
