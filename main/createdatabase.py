@@ -5,7 +5,7 @@ def create_connection():
         host="localhost",
         user="root",
         passwd="harsh@125",
-        connection_timeout=600
+        connection_timeout=60000
     )
     return con
 
@@ -62,8 +62,8 @@ def set_database():
         transac_type VARCHAR(10),
         transac_quantity INT,
         Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
-        price DECIMAL(10, 2),
-        total_price DECIMAL(10, 2),
+        price DECIMAL(20, 2),
+        total_price DECIMAL(20, 2),
         FOREIGN KEY (comp_id) REFERENCES company_detail(comp_id),
         FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id)
     );
@@ -100,7 +100,7 @@ def set_database():
         transac_quantity INT,
         date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         each_stock_price INT,
-        total_price INT,
+        total_price decimal(20,2),
         FOREIGN KEY (cust_id) REFERENCES customer(cust_id) ON DELETE CASCADE,
         FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id) ON DELETE CASCADE
     );
