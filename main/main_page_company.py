@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response, jsonify
-from stock_update import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company
+from stock_update import get_data, get_owned_stock_data, get_data_for_owned_stock_page, get_stock_of_company,get_stock_of_company_for_graph
 from createdatabase import set_database
 import sys
 import webbrowser
@@ -31,7 +31,7 @@ def stock_table():
 
 @app.route('/listed-stocks-table')
 def listed_stock_table():
-    data = get_stock_of_company(company_id)
+    data = get_stock_of_company_for_graph(company_id)
     return render_template('comp_stock_table.html', stocks=data)
 
 @app.route('/listed-stocks')

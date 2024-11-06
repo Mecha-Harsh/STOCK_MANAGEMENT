@@ -1,24 +1,58 @@
 import mysql.connector
+from mysql.connector import Error
+import time
 
 def create_connection():
-    con = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="harsh@125",
-        connection_timeout=60000
-    )
-    return con
+    """Creates a new MySQL connection."""
+    try:
+        con = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            passwd="harsh@125",
+            connection_timeout=60000
+        )
+        return con
+    except Error as err:
+        print(f"Error: {err}")
+        return None
+
+def reconnect_on_failure(func):
+    """Decorator to handle reconnection if connection is lost."""
+    def wrapper(cursor, con, query):
+        attempts = 3  # Number of reconnection attempts
+        delay = 5  # Delay between attempts in seconds
+
+        for attempt in range(attempts):
+            try:
+                return func(cursor, con, query)
+            except mysql.connector.errors.OperationalError as e:
+                if e.errno == 2013:  # Error code for "Lost connection to MySQL server"
+                    print(f"Connection lost on attempt {attempt + 1}, attempting to reconnect...")
+                    con.close()  # Close the existing connection
+                    time.sleep(delay)  # Wait before retrying
+                    con = create_connection()  # Recreate the connection
+                    cursor = con.cursor()  # Get a new cursor after reconnecting
+                else:
+                    raise e
+        print("Reconnection attempts failed.")
+        return None
+    return wrapper
+
+@reconnect_on_failure
+def execute_query(cursor, con, query):
+    """Executes a SQL query with automatic reconnection on failure."""
+    cursor.execute(query)
+    con.commit()
 
 def set_database():
     con = create_connection()
-    
-    # Check if the connection was successful
     if con is None:
-        print("Connection failed!")
+        print("Initial connection failed!")
         return None, None
     
     cursor = con.cursor()
     
+    # SQL statements for creating tables
     create_db = "CREATE DATABASE IF NOT EXISTS stock_exp"
     
     create_table_stock_price = """
@@ -49,7 +83,7 @@ def set_database():
         gross_income INT,
         stock_price INT,
         FOREIGN KEY (comp_id) REFERENCES company_detail(comp_id) ON DELETE CASCADE,
-        PRIMARY KEY (stock_id)  
+        PRIMARY KEY (stock_id)
     );
     """
     
@@ -100,34 +134,35 @@ def set_database():
         transac_quantity INT,
         date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         each_stock_price INT,
-        total_price decimal(20,2),
+        total_price DECIMAL(20,2),
         FOREIGN KEY (cust_id) REFERENCES customer(cust_id) ON DELETE CASCADE,
         FOREIGN KEY (stock_id) REFERENCES stock_initial(stock_id) ON DELETE CASCADE
     );
     """
     
-    try:
-        # Execute SQL commands
-        cursor.execute(create_db)  # Create the database
-        cursor.execute("USE stock_exp")  # Switch to the new database
-        cursor.execute(create_table_stock_price)  # Create tables
-        cursor.execute(create_company_data)
-        cursor.execute(create_initial_stock_prices)
-        cursor.execute(create_table_customer)
-        cursor.execute(create_owned_stock)
-        cursor.execute(create_customer_transac)
-        cursor.execute(create_company_transaction_table)
-        con.commit()  # Commit the transaction
-        
-    except mysql.connector.Error as err:
-        print(f"Error: {err}")
+    # List of queries to execute
+    queries = [
+        create_db,
+        "USE stock_exp",
+        create_table_stock_price,
+        create_company_data,
+        create_initial_stock_prices,
+        create_table_customer,
+        create_owned_stock,
+        create_customer_transac,
+        create_company_transaction_table
+    ]
+    
+    # Execute each query with reconnection handling
+    for query in queries:
+        execute_query(cursor, con, query)
     
     return cursor, con
 
 if __name__ == "__main__":
     cursor, con = set_database()
     
-    # Check if the connection was established
+    # Check if the connection was established and close it
     if con is not None and con.is_connected():
         con.close()
-        print("The connection is closed")
+        print("The connection is closed.")

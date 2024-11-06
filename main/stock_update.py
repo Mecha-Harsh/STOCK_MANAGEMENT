@@ -237,6 +237,41 @@ def get_stock_of_company(comp_id):
     return data
 
 
+
+
+def get_stock_of_company_for_graph(comp_id):
+    data = []
+    a = update_stock()  # Assuming this updates the stock prices
+    # query = f"SELECT comp_name FROM company_detail WHERE comp_id = {comp_id}"
+    # cursor.execute(query)
+    # name = cursor.fetchone()
+    # name = name[0]  # Assuming comp_name is the only element returned
+    price_query = f"SELECT price,date_time FROM stock_price where stock_id={comp_id}"
+    cursor.execute(price_query)
+    prices = cursor.fetchall()
+    print(prices)
+    max=-9999999
+    min=99999999
+    if prices:
+        for row in prices:
+            if(row[0]==None):
+                continue
+            if(max<row[0]):
+                max=row[0]
+            if(min>row[0]):
+                min=row[0]
+            temp = {
+                "date": row[1].strftime('%Y-%m-%d %H:%M:%S'),  # Format the date
+                "price": row[0],
+                "min":min,
+                "max":max
+            }
+            data.append(temp)
+    else:
+        print("No rows found")
+    return data
+
+
 if __name__ == "__main__":
     #get_data()
     get_data_for_owned_stock_page(1)
